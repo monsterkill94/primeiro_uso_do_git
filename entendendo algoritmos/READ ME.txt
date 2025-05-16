@@ -1,0 +1,38 @@
+# Busca Binária em Python 🔍
+
+Este projeto contém uma implementação simples e comentada de uma busca binária, um algoritmo eficiente para encontrar elementos em listas ordenadas.
+
+## Como funciona?
+
+A função `pesquisa()` recebe uma lista ordenada e um número a ser buscado. Ela retorna:
+
+- O índice onde o número foi encontrado.
+- O número de tentativas feitas até encontrar (ou concluir que não está na lista).
+
+## Como usar
+
+1. Execute o script com Python 3:
+   ```bash
+   python busca_binaria.py
+
+
+2. Digite um número de 1 a 1000 quando solicitado.
+
+
+3. Veja o resultado da busca e quantas tentativas foram necessárias.
+
+4. Exemplo de saída:
+
+   Digite um número de 1 a 1000: 743  
+   Número 743 encontrado no índice 742.  
+   Foram necessárias 9 tentativas para encontrar.
+
+Autor:
+ 
+ Caio da Silva Batista
+
+#### 5. ✅ **Licença**
+
+```txt
+MIT License
+

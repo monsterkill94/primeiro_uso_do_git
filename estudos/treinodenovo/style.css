@@ -1,0 +1,575 @@
+*{
+
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+
+}
+
+#container-header{
+display: inline-block;
+width: 100%;
+height: auto;
+}
+
+nav{
+flex-flow: row;
+position: relative;
+background-color: rgb(119, 4, 27);
+display: flex;
+width: 100%;
+height: 110px;
+padding-left: 440px;
+}
+
+.menu{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    top: 25%;
+   
+}
+
+
+
+.logo{
+display: flex;
+width: fit-content;
+align-items: center;
+justify-content: center;
+text-align: center;
+left:40%;
+margin-top: 5px;
+filter: drop-shadow(0px 5px 4px rgba(0, 0, 0, 0.25));
+}
+
+ul{
+display: inline-block;    
+width: fit-content;
+flex-flow: row;
+position: relative;
+left: 60px;
+
+}
+
+li{
+display: inline-block;
+margin-left: 40px;
+width: fit-content;
+position: relative
+;
+
+}
+a{
+display: flex;
+position: relative;   
+text-decoration: none;
+color: rgb(3, 3, 3);
+font-family: Arial, Helvetica, sans-serif;
+font-size: 20px;
+font-weight: 700;
+top:10%;
+
+}
+
+a:hover{
+border-bottom: 2px solid rgb(10, 10, 10);
+transition: ease-in 0.1ms;
+}
+
+
+
+.social-media a:hover{
+border-bottom: none;
+
+
+
+
+}
+
+
+.social-media a{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    float: left;
+    width: fit-content;
+    left: 100%;
+    top: 40px;
+    padding-left: 45px;
+    right: 0px;
+    padding-right: 0px;
+       
+    align-items: center;
+    place-items: center;
+    text-align: center;
+}
+
+
+
+
+.input-nome{
+display: flex;
+width: fit-content;
+flex-direction: column;
+padding-bottom: 20px;
+}
+
+
+.button{
+
+background-color: brown;
+width: fit-content;
+border-radius: 5px;
+padding-left: 200px;
+padding-right: 215px;
+padding-top: 15px;
+padding-bottom: 15px;
+margin-top: 10px;
+color: white;
+align-items: center;
+font-size: 25px;
+text-align: center;
+}
+
+.input-email{
+display: flex;
+width: fit-content;
+flex-direction: column;
+padding-top: 20px;
+
+}
+
+
+
+
+
+
+input{
+display: flex;
+flex-direction: column;
+width: 500px;
+height: 50px;
+border-radius: 15px;
+padding-left: 20px;
+font-size: 15px;
+
+
+}
+
+#herotext{
+display: flex;
+flex-wrap: wrap;
+flex-flow: column;
+position: absolute;
+width: fit-content;
+height: auto;
+font-size: 20px;
+font-family: Arial, Helvetica, sans-serif;
+top:26%;
+left: 20%;
+color: white;
+
+}
+
+.imagem-header img{
+
+
+display: block;
+flex-direction: column-reverse;
+width: fit-content;
+height: 900px;
+position: relative;
+float: right;
+right: 15%;
+
+}
+   
+.hero-main{
+display: flex;
+position: relative;
+width: fit-content;
+font-size: 20px;
+font-family: Arial, Helvetica, sans-serif;
+float: right;
+
+}
+
+.hero-sub{
+display: flex;
+position: relative;
+width: fit-content;
+font-size: 16px;
+padding-top: 30px;
+padding-bottom: 20px;
+
+
+}
+.button{
+
+display: flex;
+flex-flow: column;
+position: relative;
+border-radius: 15px;
+}
+
+
+
+
+
+.h4-newsletter{
+display: flex;
+flex-flow: column;
+position: relative;
+padding-bottom: 5%;
+align-items: left;
+justify-content: left;
+width: fit-content;
+
+}
+
+.container-hero{
+    background-color: rgb(0, 0, 0);
+    width: 100%;
+    height: 900px;
+    
+}
+
+#historia{
+    
+    border:solid 1px black;
+    
+    
+}
+
+
+
+article{
+font-family: 'Times New Roman', Times, serif;
+font-size: 20px;
+text-align: justify;
+color: white;
+padding-top: 50px;
+
+}
+
+
+
+.textbox{
+    color: rgb(107, 22, 0);
+    display:flex;
+    background-color: rgb(5, 5, 5);
+    width: 600px;
+    height: 1024px;
+    padding: 40px;
+    position: absolute;
+    left: 48%;
+    top: 0%;
+    align-items: center;
+
+    
+}
+
+
+.containerhistoria{
+    
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex-flow: column;
+background-color: #900;
+    height: 1024px;
+    width: 100%;
+
+    
+}
+
+
+.labelbottom{
+    
+    display: grid;
+    grid-template-columns: repeat( 4,1fr);
+    left: 65%;
+    width: 100%;
+    height: auto;
+    padding-top: 20px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    text-align: center;
+    margin-top: 50px;
+    top:96%;
+    align-items: center;
+    text-align: top;
+    gap:65px;
+    z-index: 4;
+    
+}
+
+.containerhistoria h1{
+display: flex;
+flex-direction: column;
+position: absolute;
+left: 1750px;
+font-size: 300px;
+writing-mode: vertical-lr;;
+font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+letter-spacing: 6px;}
+
+
+
+
+.labelbottom h2 {
+    width: 100%;
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
+    background-color: black;
+    padding-top: 50px;
+    
+    align-items: center;
+    text-align: center;
+    font-size: 50px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #900;
+
+}
+
+
+
+.labelbottom h3 {
+    background-color: black;
+    font-size: 20px;
+    text-align: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 300px;
+    height: 131px;
+    display: flex;
+    flex-flow: column;
+    justify-items: center;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding-top:30px;
+    
+    
+    
+}
+
+
+ 
+    
+
+
+.title-historia{
+   display: flex;
+   flex-flow: column;
+   position: absolute;
+   text-align: left;
+  left:25%;
+  top: 10%;
+  width: 400px;
+  height: 500px;
+  border-top: solid 10px white;
+  border-bottom: solid 10px white;
+  height: auto;
+  font-size: 70px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: rgb(248, 244, 244);
+
+}
+
+
+.labelbottom img{ 
+
+display: flex;
+flex-flow: column;
+width: 100%;
+height: auto;
+padding-left: 40%;
+background-color: black;
+padding-right: 38.11%;
+padding-top: 5%;
+
+    
+}
+
+.historiatittle{
+display: flex;
+flex-flow: column;
+width: 100%;
+height: auto;
+position: relative;
+}
+
+
+
+
+#containerdismilitarizacao{
+    background-color: #000000;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+}
+
+.dismilitarizacao{
+
+align-items: center;
+justify-items: center;
+width: 100%;
+height: 1200px;
+background-color: #272727;
+gap: 20px;
+
+
+}
+
+
+.title{
+    display: flex;
+    font-size: 200px;
+    position: relative;
+    text-align: center;
+    color: rgb(248, 244, 244);
+font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+margin-top: 0;
+padding-bottom: 100px;
+
+    
+
+}
+
+.informação{
+
+background-color: #900;
+padding-bottom: 25px;
+align-items: center;
+text-align: center;
+height: auto;
+}
+
+
+.informação2{
+
+    background-color: #900;
+    padding-bottom: 25px;
+    align-items: center;
+    text-align: center;
+    height: auto;
+    }
+
+
+    .informação3{
+
+        background-color: #900;
+        padding-bottom: 25px;
+        align-items: center;
+        text-align: center;
+        height: auto;
+        }
+        
+.informação4{
+
+    background-color: #900;
+    padding-bottom: 25px;
+    align-items: center;
+    text-align: center;
+    height: auto;
+    }
+    
+.informação5{
+
+    background-color: #900;
+    padding-bottom: 25px;
+    align-items: center;
+    text-align: center;
+    height: auto;
+    }
+
+
+
+
+.title6{
+font-size: 40px;
+align-items: center;
+font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.card1{
+width: fit-content;
+height: fit-content;
+font-size: 20px;
+}
+
+.title2{
+    font-size: 40px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.card2{
+
+    
+    width: fit-content;
+    height: fit-content;
+    font-size: 20px;
+
+
+}
+.title3{
+    font-size: 40px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+}
+
+.card3{
+    
+width: fit-content;
+height: fit-content;
+font-size: 20px;
+
+}
+.title4{
+    font-size: 40px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.card4{
+
+
+    width: fit-content;
+    height: fit-content;
+    font-size: 20px;
+
+}
+.title5{
+    font-size: 40px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.card5{
+    
+    width: fit-content;
+    height: fit-content;
+    font-size: 20px;
+}
+.title6{
+    font-size: 40px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+}
+.card6{
+
+    width: fit-content;
+    height: fit-content;
+    font-size: 20px;
+}

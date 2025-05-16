@@ -1,0 +1,10 @@
+{
+    "name": "meu-projeto",
+    "version": "1.0.0",
+    "scripts": {
+  "dev": "tailwindcss -i ./src/styles.css -o ./dist/output.css -c ./config/tailwind.config.js --watch",
+  "build": "tailwindcss -i ./src/styles.css -o ./dist/output.css -c ./config/tailwind.config.js --minify"
+}
+    "dependencies": {}
+  }
+

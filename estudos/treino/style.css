@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Cal+Sans&family=Kanit:wght@400;500;600&display=swap');
+*{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+    background-color: #13171B;
+
+}
+
+#container-header{
+    display: flex;
+    width: fit-content;
+    border: #35C9DD 1px solid;
+}
+header{
+    display: flex;
+    width: fit-content;
+    width: 100%;
+    height: 100%;
+    border: #35C9DD 1px solid;
+    align-items: center;
+    justify-items: center;
+    
+}
+.logo{
+    padding-left: 30%; 
+    display: flex;
+    position: relative;
+    background-color: #13171B;
+    width: fit-content;
+    padding-left: 30%; 
+    
+}
+a{
+    text-decoration: none;
+    color:#35C9DD;
+    cursor: pointer;
+    float:left;
+    position: relative;
+    
+    
+}
+
+.nav {
+    
+    display: flex;
+    float: left;
+    position: relative;
+    background-color: #13171B;
+    color: aliceblue;
+    border: #35C9DD 1px solid;
+    
+}
+
+.nav-botom {
+    display:flex;
+    position: relative;
+    background-color:#13171B;
+    border: #35C9DD 1px solid;
+    float: left;
+}
+
+
+
+img{
+    display: flex;
+    justify-items: left;
+    width: fit-content;
+    border: #35C9DD 1px solid;
+    
+}
+
+
+
+#ul{
+    margin: 1rem;
+    display: flex;
+    position: relative;
+    float:left;
+    text-decoration: none;
+    width: fit-content;
+    border: #35C9DD 1px solid;
+    left: 10%;
+}
+
+
+
+li{
+display: inline-block;
+border: #35C9DD 1px solid;
+margin-right: 50px;
+font-family: "Cal Sans", sans-serif;
+font-weight: 400;
+font-style: normal;
+
+}
+
+
+

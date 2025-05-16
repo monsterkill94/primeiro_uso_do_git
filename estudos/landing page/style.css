@@ -1,0 +1,176 @@
+:root {
+    --grey-dark: rgb(30, 30, 30);
+    --grey-light: rgb(225, 225, 225);
+    --grey-bg: rgb(158, 158, 158);
+    --white: rgb(241, 241, 241);
+    --primary-color: rgb(20, 75, 75); /* Nova cor primária */
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra padronizada */
+}
+
+/* Reset e Estilos Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--grey-bg);
+    color: var(--grey-dark);
+    font-family: "Roboto Condensed", sans-serif;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 1200px;
+    line-height: 1.6; /* Melhora a legibilidade do texto */
+}
+
+/* Cabeçalho */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+
+
+/* Navegação */
+nav ul {
+    list-style: none;
+}
+
+nav li {
+    display: inline-block;
+    margin: 0 20px; /* Margem apenas horizontal */
+}
+
+/* Conteúdo Principal */
+main {
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+    gap: 40px;
+}
+
+/* Imagem */
+main img {
+    width: 12rem;
+    height: auto;
+    display: block;
+    order: -1;
+    margin-right: 20px;
+    border-radius: 8px; /* Adiciona bordas arredondadas */
+}
+
+/* Artigo/Conteúdo */
+article {
+    order: 1;
+    flex: 1; /* Ocupa espaço disponível */
+    max-width: 600px; /* Limita largura para melhor leitura */
+}
+
+/* Tipografia */
+h1 {
+    font-weight: 200;
+    font-size: 2.5rem; /* Unidade relativa */
+}
+
+h2 {
+    font-size: 2.5rem; /* 50px convertido para rem */
+    line-height: 1.2; /* Melhor que 10px fixo */
+    font-weight: 400;
+    margin-bottom: 1.25rem; /* 20px convertido */
+}
+
+p {
+    line-height: 1.6;
+    max-width: 100%; /* Melhor que 200px fixo */
+    margin-bottom: 1rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+/* Links e Botões */
+a {
+    color: var(--grey-dark);
+    text-decoration: none;
+    transition: all 0.2s ease;}
+
+a:hover {
+    color: var(--white);
+}
+
+#Inscrevam-se {
+    border: 3px solid var(--grey-dark);
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: var(--grey-dark);
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+#Inscrevam-se:hover {
+    background-color: var(--grey-dark);
+    border-color: var(--white);
+    color: var(--white);
+}
+
+/* Formulário */
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+    margin-top: 2rem;
+}
+
+input {
+    height: 3.5rem;
+    margin-top: 1rem;
+    padding: 0 1.5rem;
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+    box-shadow: var(--shadow);
+}
+
+input[type="submit"] {
+    background-color: var(--grey-dark);
+    color: var(--white);
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: all 0.2s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px); /* Efeito sutil de levantamento */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    nav li {
+        display: block;
+        margin: 10px 0;
+    }
+    
+    main {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    main img {
+        order: initial;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+}

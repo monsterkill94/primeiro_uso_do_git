@@ -1,0 +1,213 @@
+.hashop {
+  position: relative;
+  overflow: hidden;
+}
+
+.hashop__container {
+  width: 100%;
+  height: 428px;
+}
+
+.hashop__container-yt {
+  position: relative;
+  display: none;
+}
+
+.hashop__container-line {
+  border: 10px solid #26b500;
+  border-width: 0 0 7px;
+  background-color: #26b500;
+}
+
+@media only screen and (min-width: 640px) {
+  .hashop__container-line {
+    height: 340px;
+    border-width: 10px 0;
+  }
+}
+
+.hashop__container-red {
+  border: 10px solid #000;
+  border-width: 0 0 7px;
+  background-color: #000;
+}
+
+@media only screen and (min-width: 640px) {
+  .hashop__container-red {
+    height: 340px;
+    border-width: 10px 0;
+  }
+}
+
+.hashop__line {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden;
+  height: 107px;
+  -webkit-animation: hashopline 10s linear 0s infinite;
+  animation: hashopline 10s linear 0s infinite;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.hashop__line__container {
+  position: relative;
+  height: 107px;
+}
+
+@media only screen and (min-width: 640px) {
+  .hashop__line__container {
+    height: 320px;
+  }
+}
+
+.hashop__line-yt {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-animation: hashopline 10s linear 0s infinite;
+  animation: hashopline 10s linear 0s infinite;
+}
+
+.hashop__sub {
+  z-index: 2;
+  display: block;
+}
+
+.hashop__sub:hover {
+  opacity: 1;
+}
+
+@media only screen and (min-width: 640px) {
+  .hashop__sub {
+    position: absolute;
+    top: 10px;
+    left: 0;
+  }
+}
+
+.hashop__item {
+  position: relative;
+  width: 107px;
+  height: 107px;
+}
+
+.hashop__item__loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .3;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-width: 0 1px 1px 0;
+  background: url(/assets/img/202004/top/loading.png) no-repeat center center;
+  background-size: 90px auto;
+}
+
+.hashop__item__image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: opacity .3s ease 0s;
+  transition: opacity .3s ease 0s;
+  opacity: 0;
+  background: no-repeat center center;
+  background-size: cover;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: opacity;
+}
+
+.hashop__item__image.active {
+  opacity: 1;
+}
+
+.hashop__item-yt {
+  width: 320px;
+}
+
+.hashop__item-yt__image {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  -webkit-transition: opacity .3s ease 0s;
+  transition: opacity .3s ease 0s;
+  opacity: 0;
+  background: no-repeat center center;
+  background-size: cover;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: opacity;
+}
+
+.hashop__item-yt__image.active {
+  opacity: 1;
+}
+
+.hashop__spacer {
+  width: 100%;
+}
+
+@media only screen and (min-width: 640px) {
+  .hashop {
+    height: 660px;
+  }
+  .hashop__container {
+    height: 640px;
+  }
+  .hashop__container-yt {
+    display: block;
+  }
+  .hashop__item {
+    width: 160px;
+    height: 160px;
+  }
+  .hashop__line {
+    height: 160px;
+  }
+  .hashop__line__container {
+    height: 160px;
+  }
+  .hashop__line__container.-sp {
+    display: none;
+  }
+}
+
+.hashop__container-line .hashop__item__loader {
+  border-width: 1px 1px 1px 0;
+}
+
+.hashop__container .hashop__line__container:first-child .hashop__item__loader {
+  border-width: 1px 1px 1px 0;
+}
+
+@-webkit-keyframes hashopline {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes hashopline {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
+  }
+}

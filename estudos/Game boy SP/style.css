@@ -1,0 +1,313 @@
+@import url('https://fonts.googleapis.com/css2?family=Cal+Sans&family=Coral+Pixels&family=Kanit:wght@400;500;600&family=Lexend:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+/*/* Color Theme Swatches in Hex */
+.sandwish-y-firends-1-hex { color: #FF530D; }
+.sandwish-y-firends-2-hex { color: #FF9400; }
+.sandwish-y-firends-3-hex { color: #E86500; }
+.sandwish-y-firends-4-hex { color: #E82200; }
+.sandwish-y-firends-5-hex { color: #FF0000; }
+
+/* Color Theme Swatches in RGBA */
+.sandwish-y-firends-1-rgba { color: rgba(255, 82, 13, 1); }
+.sandwish-y-firends-2-rgba { color: rgba(255, 147, 0, 1); }
+.sandwish-y-firends-3-rgba { color: rgba(232, 100, 0, 1); }
+.sandwish-y-firends-4-rgba { color: rgba(232, 33, 0, 1); }
+.sandwish-y-firends-5-rgba { color: rgba(255, 0, 0, 1); }
+
+/* Color Theme Swatches in HSLA */
+.sandwish-y-firends-1-hsla { color: hsla(17, 100, 52, 1); }
+.sandwish-y-firends-2-hsla { color: hsla(34, 100, 50, 1); }
+.sandwish-y-firends-3-hsla { color: hsla(26, 100, 45, 1); }
+.sandwish-y-firends-4-hsla { color: hsla(8, 100, 45, 1); }
+.sandwish-y-firends-5-hsla { color: hsla(0, 100, 50, 1); }
+
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container1{
+    display: flex;
+    position: absolute;
+    z-index: 8;
+    background-color: #000000;
+    width: 100%;
+    height: 100px;
+    align-items: center;
+}
+
+
+
+
+.logo{
+    
+    left: 50%;
+    top: 1px;
+    position: absolute;
+    width: fit-content;
+    height: 100px;
+    z-index: 10;
+    filter: drop-shadow(0px 15px 9px #000000);
+    
+}
+nav{
+    display: flex;
+    background-color: #000000;
+    width: 100%;
+    height: 100px;
+    border-bottom: #FF9400 solid 1px;
+    filter: drop-shadow(0px 15px 9px #000000);
+}
+
+
+nav a{
+    list-style: none;
+    text-decoration: none;
+    color: aliceblue;
+    
+    width:fit-content ;
+}
+
+
+
+nav a:hover{
+    border-bottom: solid 2px rgb(247, 247, 247);
+    transition: all 0.4ms ease;
+    color: rgb(255, 255, 255);
+}
+.butons{
+    display: inline-block;
+    width: fit-content;
+}
+
+nav li{
+    display: inline-block;
+    gap: 20px;
+    position: relative;
+    width: fit-content;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-left: 20px;
+}
+
+nav  ul{
+    display: flex;
+    flex-flow: row;
+    position: relative;
+    left: 80%;
+    top: 40px;
+    gap: 50px;
+    width: fit-content;
+    font-family: "Sansation", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    
+    
+}
+
+.market nav{
+    
+    color: white;
+}
+.hero-header h1{
+    display: flex;
+    flex-flow: column;
+    font-size: 60px;
+    font-family: "Sansation", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    width: fit-content;
+    position: absolute;
+    left: 20%;
+    top: 185px;
+    justify-items: center;
+    color: #FF530D;
+    
+}
+.subtitle-header{
+display: flex;
+flex-flow: column;
+position: absolute;
+left: 20%;
+top: 325px;
+width: fit-content;
+font-size: 30px;
+width: 600px;
+font-family: "Sansation", sans-serif;
+font-weight: 700;
+font-style: normal;
+color: #E86500;
+font-size: 20px;
+
+
+}
+
+.calltoaction a{
+    display: flex;
+    flex-flow: column;
+    text-decoration: none;
+    position: absolute;
+    color: #000000;
+    font-size: 30px;
+    width: fit-content;
+    background-color: #FF9400;
+    top: 100%;
+    width: 200px;
+    text-align: center;
+    justify-items: center;
+    align-items: center;
+    padding-top:20px ;
+    padding-bottom:20px ;
+    border-radius: 10px;
+    top: 100%;
+    
+    
+    
+}
+
+.calltoaction{
+    
+    display: flex;
+    flex-flow: row;
+    position: absolute;
+    width: fit-content;
+    left: 20%;
+    
+    color: white;
+    font-family: "Sansation", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    height: 60px;
+    
+}
+
+.circle{
+    display: flex;
+    position: absolute;
+    background-color: #E82200;
+    top: 60%;
+    left: 70%;
+    border-radius: 1000px;
+    text-align: center;
+    justify-items: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    padding:30px ;
+    color: white;
+    font-family: "Sansation", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 30px;
+    transform: rotate(20deg);
+    z-index: 10;
+    filter: drop-shadow(0px 15px 9px #000000);
+}
+
+.circle2{
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    background-color: #FF530D;
+    border-radius: 1000px;
+    width: 500px;
+    height: 500px;
+    z-index: -3;
+    position: relative;
+    top: 50%;
+    left: 120%;
+    filter: blur(250px);
+    
+    
+}
+
+
+.hero-header{
+    
+    width: 100%;
+    height: 1000px;
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    z-index: 4;
+    background-color: #000000;
+}
+
+.subtitle{
+    display: flex;
+    flex-flow: row;
+    position: relative;
+    width: 20%;
+    height: 100px;
+    top: 60%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    left: 20%;
+    color: rgba(232, 33, 0, 1);
+    font-family: "Sansation", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    
+
+}
+
+.subtitle{
+border: #FF9400 solid 2px;
+align-items: center;
+
+}
+
+header h4{
+display: flex;
+flex-flow: column;
+position: relative;
+width: fit-content;
+top: 0%;
+color: #FF9400;
+font-family: "Sansation", sans-serif;
+font-weight: 300;
+font-style: normal;
+filter: drop-shadow(0px 15px 9px #000000);
+font-size: 20px;
+
+
+
+}
+.smash{
+
+    display: flex;
+    flex-flow: column;
+    position: absolute;
+    width: fit-content;
+    border-radius: 1000px;
+    left:50%;
+    height:600px;
+    top:20%;
+    filter: drop-shadow(0px 15px 9px #000000);
+}
+
+.smash-logo{
+    display: flex;
+    flex-flow: row;
+    position: absolute;
+    width: fit-content;  
+    left: 46%;
+    top: 76%;
+    padding-top: 20px;
+    filter: drop-shadow(0px 15px 9px #000000);
+    
+}
+
+.calltoaction{
+    
+    position: relative;
+    width: fit-content;
+    left: 20%;
+    top:24%;
+    
+}
+

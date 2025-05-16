@@ -1,0 +1,1 @@
+document.getElementById("menu").innerHTML = "<h1>Menu</h1>";

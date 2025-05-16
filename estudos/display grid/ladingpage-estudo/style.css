@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&display=swap');
+
+
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+nav{
+background-color: #13171B;
+display: flex;
+
+align-items: center;
+font-family: ;
+}
+a{
+    display: inline-block;
+    text-decoration: none;
+    margin-right: 90px;
+    color:#8f0817;
+
+}
+a:hover{
+
+text-decoration: none;
+border-bottom: 2px solid: #8B2323 
+
+
+}
+
+
+.menu{
+    display: inline-block;
+    padding-right: 5%;
+    align-items: center;
+    font-family: "Kanit", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+
+
+}
+.logo img{
+display: flex;
+align-items: center;
+justify-items: center; 
+
+
+
+
+}
+.logo{
+display: flex;
+margin-left: 20%;
+padding-right: 20%;
+align-items: center;
+justify-items: center;
+}
+.hero-header{display:inline-block;
+align-items: left;
+justify-items: left;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 60px;
+height: 50%;
+border: 1px solid black;
+padding-left: 0%;
+}
+h1{
+    display:inline-block
+    align-items:right;
+    justify-items: center;
+    color: #8B2323;
+    font-weight: 800;
+}
+h2{
+    display:inline-block
+    align-items: center;
+    justify-items: :left
+    text-alingn: left
+    color: #8B2323;
+    font-weight: 600;
+    margin-bottom: 15px;
+    
+}
+h6{
+    display: inline-block;
+    align-items: left;
+    justify-items: left;
+    flex-wrap: nowrap;
+    color: #343339;
+    font-size: 25px ;
+    font-weight: 300;
+    text-align: left;
+    
+}
+
+}
+.img-header{
+display: flex;
+flex-direction: column;
+border: 1px solid black;
+width:50%;	
+align-items: center;
+justify-items: center;
+
+}
+
+img{
+    display: inline-block;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+
+}

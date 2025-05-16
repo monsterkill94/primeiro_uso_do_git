@@ -1,0 +1,785 @@
+//-----------------------------------------------------
+// -top_youtube_channel_thumbnail
+//-----------------------------------------------------
+
+  var top_youtube_channel_thumbnail = (function (window, document, $) {
+
+    function init(){
+
+      if ( !$('.top__youtube__play').length ) return;
+
+      var _target_img = '';
+      var _i = 0;
+
+      function set_image() {
+        $('.top__youtube__play').css({
+          'background-image' : 'url('+ _target_img +')'
+        });
+      }
+
+      function load_image() {
+
+        var _this_img_src = _one_piece_channel_thumbnail[_i];
+        var _this_img = new Image();
+
+        _this_img.onload = function () {
+          _width = _this_img.naturalWidth;
+
+          if ( _width > 120 ) {
+            _target_img = _this_img_src;
+            set_image();
+          } else {
+            _i = _i + 1;
+            load_image();
+          }
+        };
+        _this_img.onerror = function () {
+          _i = _i + 1;
+          load_image();
+        };
+        _this_img.src = _this_img_src;
+      }
+
+      load_image();
+    }
+
+
+    return {
+      init: init
+    };
+
+
+  })(window, document, jQuery);
+
+
+
+
+//-----------------------------------------------------
+// -mod_youtube
+//-----------------------------------------------------
+
+  var mod_youtube = (function (window, document, $) {
+
+    var _current_scrollY;
+    var _this_id_num = 0;
+
+    function init(){
+
+      // ポップアップ非表示
+      $(document).on('click', '[data-youtube-close="true"]', movie__popup__hide);
+
+      $('<script>').attr('src', 'https://www.youtube.com/iframe_api').appendTo('head');
+
+
+      if ( $('[data-youtube-type]').length || $('[data-gallery-group="rakugaki"]').length ) {
+
+        // インライン表示
+        $(document).on('click', '[data-youtube-type="inline"]', movie__inline__show);
+
+        // ポップアップ表示
+        $(document).on('click', '[data-youtube-type="popup"]', movie__popup__show);
+
+        // ポップアップ&インライン切り替え
+        $(document).on('click', '[data-youtube-type="popup-inline"]', function(_event) {
+          var _this = $(this);
+
+          if ( _flag_responsive !== 'sp' ) {
+            movie__popup__show(_event, _this);
+          } else {
+            movie__inline__show(_event, _this);
+          }
+        });
+
+        // ハッシュによる出力
+        $(document).on('click', 'a', function(e) {
+          const {currentTarget} = e;
+
+          let {pathname: currentPath} = location;
+          let {pathname: linkPath, hash: linkHash} = currentTarget;
+          currentPath = currentPath.replace(/\/index\.html$/, '/');
+          linkPath = linkPath.replace(/\/index\.html$/, '/');
+
+          if (currentPath === linkPath && linkHash.match(/^#trailer-area(\.html)?$/)){
+            movie__popup__show(e, $(document.querySelector('[data-youtube-type]')));
+          }
+        });
+
+
+
+        // 画像サイズが小さい（ダミー）の時差し替え
+        $('[data-youtube-type]').each(function() {
+          var _this = $(this);
+          var _this_img = _this.find('img');
+          if (!_this_img.length) return;
+
+          var _img = new Image();
+          _img.src = _this_img.attr('src');
+
+          _img.onload = function () {
+            var _width  = _img.width;
+
+            if ( Number(_width) === 120 ) {
+              _this_img.attr('src', 'https://img.youtube.com/vi/'+ _this.attr('data-youtube-id') +'/hqdefault.jpg');
+            }
+          };
+        });
+
+
+
+        // ページ読み込み時自動発火 ＆ セッションストレージチェック
+        if ( !$('[data-youtube-ready="true"]').length || location.hash.match(/trailer-area.html/g) ) return;
+        $('[data-youtube-ready="true"]').each(function() {
+          var _this = $(this);
+          if ( _this.attr('data-youtube-not-reflash') === sessionStorage.getItem('youtube-not-reflash') ) return;
+          _this.click();
+        });
+
+
+      }
+
+    }
+
+
+
+    function escapeHTML(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/\'/g, '&#x27;')
+        .replace(/`/g, '&#x60;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/,/g, '&#044;');
+    }
+
+
+
+
+    // ポップアップ非表示
+    function movie__popup__hide() {
+      $('#popup-window-youtube').attr('aria-hidden', true);
+
+      if ( $(this).is('[data-youtube-not-reflash') ) {
+        sessionStorage.setItem('youtube-not-reflash', $(this).attr('data-youtube-not-reflash') );
+      }
+
+      setTimeout( function() {
+        // $('[data-youtube-type="popup"], [data-youtube-type="popup-inline"]').attr('data-youtube-active', false);
+        $('#popup-window-youtube').remove();
+
+        // 開いた座標に戻る
+        $('body').attr('data-active-fixed', false);
+        $('body').css({
+          paddingRight: 0,
+          top: 0
+        });
+        window.scrollTo( 0 , _current_scrollY );
+
+      }, 250);
+    }
+
+
+
+    // ポップアップ表示
+    function movie__popup__show(_event, _this) {
+      _event.preventDefault();
+
+      if ( !_this ) {
+        _this = $(this);
+      }
+
+      // if ( _this.attr('data-youtube-active') === 'true' ) return;
+
+      var _this_id = _this.attr('data-youtube-id');
+      var _this_caption = _this.attr('data-youtube-caption');
+      var _this_btn = '';
+      var _flag_reflash = '';
+
+      if ( typeof _this.attr('data-youtube-btn-txt') !== 'undefined' ) {
+        _this_btn = '<div class="el-youtube-iframe__btn"><a '+ (typeof _this.attr('data-youtube-btn-target') !== 'undefined' ? 'target="'+ _this.attr('data-youtube-btn-target') +'"' : '') +' href="'+ _this.attr('data-youtube-btn-href') +'">'+ _this.attr('data-youtube-btn-txt') +'</a></div>';
+      }
+      if ( typeof _this.attr('data-youtube-not-reflash') !== 'undefined' ) {
+        _flag_reflash = 'data-youtube-not-reflash="'+ _this.attr('data-youtube-not-reflash') +'"';
+      }
+
+      // _this.attr('data-youtube-active', true);
+      $('body').append('<div id="popup-window-youtube" class="el-popup-window" aria-hidden="true">' +
+        '<div class="el-popup-window__holder">' +
+          '<div class="el-popup-window__container">' +
+            '<div class="el-youtube-iframe">' +
+              '<div class="el-youtube-iframe__holder">' +
+                '<div class="el-youtube-iframe__container">' +
+                  '<div class="el-loading-icon">' +
+                    '<div class="el-loading-icon__holder">' +
+                      '<div class="el-loading-icon__item" data-object="1"></div><div class="el-loading-icon__item" data-object="2"></div><div class="el-loading-icon__item" data-object="3"></div><div class="el-loading-icon__item" data-object="4"></div><div class="el-loading-icon__item" data-object="5"></div><div class="el-loading-icon__item" data-object="6"></div><div class="el-loading-icon__item" data-object="7"></div><div class="el-loading-icon__item" data-object="8"></div><div class="el-loading-icon__item" data-object="9"></div><div class="el-loading-icon__item" data-object="10"></div><div class="el-loading-icon__item" data-object="11"></div><div class="el-loading-icon__item" data-object="12"></div>' +
+                    '</div>' +
+                  '<!-- /el-loading-icon --></div>' +
+                  // '<iframe src="'+ _this_id +'?autoplay=1&amp;mute=1&amp;wmode=transparent&amp;rel=0" allowfullscreen="allowfullscreen"></iframe>' +
+                  // '<iframe id="hogehoge" src="https://www.youtube.com/embed/'+ _this_id +'?rel=0&amp;wmode=transparent&amp;enablejsapi=1" allowfullscreen="allowfullscreen"></iframe>' +
+                  '<div id="'+ _this_id +'"></div>' +
+                '</div>' +
+                ( _this_caption ? '<div class="el-youtube-iframe__caption"><p>'+ escapeHTML(_this_caption) +'</p></div>' : '' ) +
+              '</div>' +
+              _this_btn +
+            '<!-- /el-youtube-iframe --></div>' +
+          '<!-- /el-popup-window__container --></div>' +
+          '<div class="el-popup-window__close">' +
+            '<button type="button" data-youtube-close="true" '+ _flag_reflash +'><i class="svg--action-close" aria-hidden="false"><svg><use xlink:href="#svg--action-close"></use></svg></i></button>' +
+          '<!-- /el-popup-window__close --></div>' +
+        '</div>' +
+        '<button type="button" class="el-popup-window__overlay" aria-hidden="false" data-youtube-close="true" '+ _flag_reflash +'></button>' +
+      '<!-- /el-popup-window --></div>');
+
+
+      var _iframe_api_option = new YT.Player(_this_id, {
+        videoId: _this_id,
+        playerVars: {
+          playsinline: 1,
+          rel: 0,
+        },
+        events: {
+          'onReady': function (event) {
+            // event.target.mute();
+            // event.target.playVideo();
+
+            // 自動再生検証（PCは問題無し、SPは不安定）
+            // var $playerWindow = $('#'+ _this_src +'')[0].contentWindow;
+            // $playerWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+          },
+          // ループ再生用
+          // 'onStateChange': function (event) {
+          //   if (event.data == YT.PlayerState.ENDED) {
+          //       event.target.playVideo();
+          //   }
+          // }
+        }
+      });
+
+
+      _current_scrollY = $( window ).scrollTop();
+      var _current_scrollsize = window.innerWidth - $(window).outerWidth(true);
+
+      // 開いた座標を固定
+      $('body').attr('data-active-fixed', true);
+      $('body').css({
+        paddingRight: _current_scrollsize,
+        top: -_current_scrollY
+      });
+
+      $('#popup-window-youtube').attr('aria-hidden', 'false');
+    }
+
+
+
+    // インライン表示
+    function movie__inline__show(_event, _this) {
+      _event.preventDefault();
+
+      if ( !_this ) {
+        _this = $(this);
+      }
+
+      if ( _this.attr('data-youtube-active') === 'true' ) return;
+
+      var _this_src = _this.attr('data-youtube-id');
+      _this_id_num = _this_id_num + 1;
+
+      _this.attr('data-youtube-active', true);
+      _this.find('picture').parent().append('<div class="el-loading-icon">' +
+                                        '<div class="el-loading-icon__holder">' +
+                                          '<div class="el-loading-icon__item" data-object="1"></div><div class="el-loading-icon__item" data-object="2"></div><div class="el-loading-icon__item" data-object="3"></div><div class="el-loading-icon__item" data-object="4"></div><div class="el-loading-icon__item" data-object="5"></div><div class="el-loading-icon__item" data-object="6"></div><div class="el-loading-icon__item" data-object="7"></div><div class="el-loading-icon__item" data-object="8"></div><div class="el-loading-icon__item" data-object="9"></div><div class="el-loading-icon__item" data-object="10"></div><div class="el-loading-icon__item" data-object="11"></div><div class="el-loading-icon__item" data-object="12"></div>' +
+                                        '</div>' +
+                                      '<!-- /el-loading-icon --></div>' +
+                                      '<div id="'+ _this_src + _this_id_num +'"></div>');
+
+      var _iframe_api_option = new YT.Player(_this_src + _this_id_num, {
+        videoId: _this_src,
+        playerVars: {
+          playsinline: 1,
+          rel: 0,
+        },
+        events: {
+          'onReady': function (event) {
+            event.target.mute();
+            setTimeout( function() {
+              event.target.playVideo();
+            }, 300);
+
+            // 発火不安定
+            // var $playerWindow = $('#'+ _this_src + _this_id_num +'')[0].contentWindow;
+            // $playerWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+          },
+          // ループ再生用
+          // 'onStateChange': function (event) {
+          //   if (event.data == YT.PlayerState.ENDED) {
+          //       event.target.playVideo();
+          //   }
+          // }
+        }
+      });
+
+    }
+
+
+
+    return {
+      init: init
+    };
+
+
+  })(window, document, jQuery);
+
+
+
+
+//-----------------------------------------------------
+// -mod_popup_window
+//-----------------------------------------------------
+
+	var mod_popup_window = (function (window, document, $) {
+
+    var _current_scrollY;
+
+    function init(){
+
+      //ポップアップ：表示
+      $(document).on('click','[data-popup-open="true"]', open_popup_window);
+
+      //ポップアップ：閉じる
+      $(document).on('click','[data-popup-close="true"]', close_popup_window);
+
+      // ページ読み込み時自動発火 ＆ セッションストレージチェック
+      if ( !$('[data-popup-ready="true"]').length || location.hash.match(/trailer-area.html/g) ) return;
+      $('[data-popup-ready="true"]').each(function() {
+        var _this = $(this);
+        if ( _this.attr('data-popup-not-reflash') === sessionStorage.getItem('popup-not-reflash') ) {
+          $('#popup-window-toppage').remove();
+        } else {
+          _this.attr('aria-hidden', false);
+        }
+      });
+    }
+
+
+
+    //ポップアップ：表示
+    function open_popup_window() {
+
+      _current_scrollY = $( window ).scrollTop();
+      var _current_scrollsize = window.innerWidth - document.body.clientWidth;
+
+      //開いた座標を固定
+      $('body').attr('data-active-fixed', true);
+      $('body').css({
+        paddingRight: _current_scrollsize,
+        top: -_current_scrollY
+      });
+
+      var _popup_id = $(this).attr('data-popup-id');
+      var _popup_elem = $('#'+ _popup_id +'');
+
+      _popup_elem.attr('aria-hidden', 'false');
+
+      _popup_elem.find('.el-popup-window__holder').css({
+        top : ( window.innerHeight / 2 ) - ( _popup_elem.find('.el-popup-window__holder').height() / 2 )
+      });
+
+      return false;
+    }
+
+
+    //ポップアップ閉じる
+    function close_popup_window() {
+
+      var _this = $(this);
+      var _this_parent = _this.closest('.el-popup-window');
+
+      if ( _this_parent.is('[data-popup-not-reflash') && _this.is('[data-popup-close]:not(.el-popup-window__overlay)') ) {
+        sessionStorage.setItem('popup-not-reflash', _this_parent.attr('data-popup-not-reflash') );
+      }
+
+      if ( _this_parent.is('#popup-window-toppage') ) {
+        $('.el-popup-window').attr('aria-hidden', 'true');
+        setTimeout( function() {
+          $('#popup-window-toppage').remove();
+        }, 500);
+      } else {
+        $('.el-popup-window').attr('aria-hidden', 'true');
+      }
+
+
+      //開いた座標に戻る
+      setTimeout( function() {
+        $('body').attr('data-active-fixed', false);
+        $('body').css({
+          paddingRight: 0,
+          top: 0
+        });
+        window.scrollTo( 0 , _current_scrollY );
+      }, 300);
+
+      return false;
+    }
+
+
+
+    return {
+      init: init
+    };
+
+
+  })(window, document, jQuery);
+
+
+
+
+//-----------------------------------------------------
+// -mod_gallery_window
+//-----------------------------------------------------
+
+  var mod_gallery_window = (function (window, document, $) {
+
+
+    var _current_scrollY;
+
+
+    function init(){
+
+      //ギャラリー：表示
+      $(document).on('click','[data-gallery-open="true"]', open_gallery_window);
+
+      // ギャラリー：次へ戻る
+      $(document).on('click','.el-gallery-window__prev button, .el-gallery-window__next button', click__prev_next_gallery);
+
+      //ギャラリー：閉じる
+      $(document).on('click','[data-gallery-close="true"]', close_gallery_window);
+
+      // ギャラリー：スワイプ処理
+      var moveX;
+      var posiX;
+      var flag_pinchi = false;
+      $(document).on('touchstart mousedown', '.el-gallery-window__holder', function(event) {
+        posiX = getX(event);
+        moveX = '';
+        flag_pinchi = false;
+
+        $(document).on('touchmove mousemove', '.el-gallery-window__holder', function(event) {
+          event.preventDefault();
+
+          if ( event.touches.length > 1 ) {
+            flag_pinchi = true;
+          }
+
+          if (posiX - getX(event) > 50) {
+            /** 右→左と判断 */
+            moveX = 'left';
+          } else if (posiX - getX(event) < -50) {
+            /** 左→右と判断 */
+            moveX = 'right';
+          }
+        });
+      });
+      $(document).on('touchend mouseup', '.el-gallery-window__holder', function(event) {
+        if ( moveX !== '' ) {
+          if ( flag_pinchi ) return;
+          click__prev_next_gallery(event, moveX);
+        }
+      });
+
+      function getX(event) {
+        if (event.type === 'touchstart' || event.type === 'touchmove') {
+          return (event.originalEvent.touches[0].pageX);
+        } else if (event.type === 'mousedown' || event.type === 'mousemove') {
+          return (event.offsetX);
+        }
+      }
+
+      // ハッシュによる出力
+      $(document).on('click', 'a', function(e) {
+        const {currentTarget} = e;
+
+        let {pathname: currentPath} = location;
+        let {pathname: linkPath, hash: linkHash} = currentTarget;
+        currentPath = currentPath.replace(/\/index\.html$/, '/');
+        linkPath = linkPath.replace(/\/index\.html$/, '/');
+
+        if (currentPath === linkPath && linkHash.match(/^#comics-area(\.html)?$/)){
+          open_gallery_window.bind($(document.querySelector('[data-gallery-open="true"]')), e)();
+        }
+      });
+
+      // アクセスした URL のハッシュによる出力
+      if (location.hash.match(/^#comics-area(\.html)?$/)){
+        $('#popup-window-toppage').remove();
+        open_gallery_window.bind($(document.querySelector('[data-gallery-open="true"]')), null)();
+      }
+
+    }
+
+
+
+    function click__prev_next_gallery(_event, _swipe_direction) {
+
+      var _current_item = $('[data-gallery-current]').closest('[class$="__item"]');
+      var _current_index = _current_item.index();
+      var _current_item_pos;
+
+      var _move_num = 0;
+      if ( typeof _swipe_direction !== 'undefined' ) {
+        if ( _swipe_direction === 'right' ) {
+          _current_item_pos = _current_item.prev();
+          _move_num = -1;
+        } else if ( _swipe_direction === 'left' ) {
+          _current_item_pos = _current_item.next();
+          _move_num = 1;
+        }
+      } else {
+        if ( $(this).parent().attr('class').match(/__prev/g) ) {
+          _current_item_pos = _current_item.prev();
+          _move_num = -1;
+        } else if ( $(this).parent().attr('class').match(/__next/g) ) {
+          _current_item_pos = _current_item.next();
+          _move_num = 1;
+        }
+      }
+
+      if ( _current_item_pos.find('[data-gallery-open="true"]').length ) {
+        var _contents_src = _current_item_pos.find('[data-gallery-open="true"]').attr('href');
+        var _contents_alt = _current_item_pos.find('[data-gallery-open="true"]').find('img').attr('alt');
+
+        var _caption_src = '';
+        if ( typeof _current_item_pos.find('[data-gallery-open="true"]').attr('data-gallery-caption') !== 'undefined' ) {
+          _caption_src = '<p>' + _current_item_pos.find('[data-gallery-open="true"]').attr('data-gallery-caption') + '</p>';
+        }
+
+        if ( _contents_src.match(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/g) ) {
+          var _thumbnail_src = _current_item_pos.find('[data-gallery-open="true"]').find('img').attr('src');
+          var _youtube_id = _contents_src.split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+          if ( _youtube_id[2] !== undefined ) {
+            _youtube_id = _youtube_id[2].split(/[^0-9a-z_\-]/i)[0];
+          } else {
+            _youtube_id = _youtube_id[0];
+          }
+
+          // youtube
+          _this_contents_html = '<div class="el-gallery-window__pic" data-type-youtube="true" data-display="false">' +
+                                  '<div class="el-gallery-window__pic__inner" data-youtube-type="inline" data-youtube-id="'+ _youtube_id +'" data-youtube-active="false">' +
+                                    '<picture style="--caption-height:0px;">' +
+                                      '<img src="'+ _thumbnail_src +'" alt="'+ _contents_alt +'">' +
+                                    '</picture>' +
+                                    _caption_src +
+                                  '</div>' +
+                                '</div>';
+        } else {
+          // img
+          _this_contents_html = '<div class="el-gallery-window__pic" data-display="false">' +
+                                  '<div class="el-gallery-window__pic__inner">' +
+                                    '<picture style="--caption-height:0px;">' +
+                                      '<img src="'+ _contents_src +'" alt="'+ _contents_alt +'">' +
+                                    '</picture>' +
+                                    _caption_src +
+                                  '</div>' +
+                                '</div>';
+        }
+
+        $('.el-gallery-window__inner').html(_this_contents_html);
+
+        setTimeout( function() {
+          $('.el-gallery-window__pic picture').css('--caption-height', 'auto');
+          $('.el-gallery-window__pic p').css('--img-width', 'auto');
+          $('.el-gallery-window__pic p').css('--caption-height', 'auto');
+
+          $('.el-gallery-window__pic picture').css('--caption-height', $('.el-gallery-window__pic').find('p').length ? $('.el-gallery-window__pic').find('p').height() + 'px' : '0px');
+          $('.el-gallery-window__pic p').css('--img-width', $('.el-gallery-window__pic').find('img').width() + 'px');
+          $('.el-gallery-window__pic p').css('--caption-height', $('.el-gallery-window__pic').find('p').length ? '-' + ($('.el-gallery-window__pic').find('p').height() + 10) + 'px' : '0px');
+
+          $('.el-gallery-window__pic').attr('data-display', true);
+        }, 100);
+
+        $('[data-gallery-open="true"]').removeAttr('data-gallery-current');
+        $('[data-gallery-group]').find('[class$="__item"]').eq(_current_index + _move_num).find('[data-gallery-open="true"]').attr('data-gallery-current', true);
+      } else {
+        close_gallery_window(_event);
+      }
+    }
+
+
+    //ギャラリー：表示
+    function open_gallery_window(_event) {
+
+      if (_event) {
+        _event.preventDefault();
+      }
+
+      $(this).attr('data-gallery-current', true);
+
+      var _contents_src = $(this).attr('href');
+      var _contents_alt = $(this).find('img').attr('alt');
+
+      var _caption_src = '';
+      if ( typeof $(this).attr('data-gallery-caption') !== 'undefined' ) {
+        _caption_src = '<p>' + $(this).attr('data-gallery-caption') + '</p>';
+      }
+
+      var _display_next_prev = true;
+      if ( $(this).closest('[class$="__item"]').prev().find('[data-gallery-open="true"]').length || $(this).closest('[class$="__item"]').next().find('[data-gallery-open="true"]').length ) {
+        _display_next_prev = false;
+      }
+
+      _this_contents_html = '';
+      if ( _contents_src.match(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/g) ) {
+        var _thumbnail_src = $(this).find('img').attr('src');
+
+        var _youtube_id = _contents_src.split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+        if ( _youtube_id[2] !== undefined ) {
+          _youtube_id = _youtube_id[2].split(/[^0-9a-z_\-]/i)[0];
+        } else {
+          _youtube_id = _youtube_id[0];
+        }
+
+        // youtube
+        _this_contents_html = '<div class="el-gallery-window__pic" data-type-youtube="true">' +
+                                '<div class="el-gallery-window__pic__inner" data-youtube-type="inline" data-youtube-id="'+ _youtube_id +'" data-youtube-active="false">' +
+                                  '<picture style="--caption-height:0px;">' +
+                                    '<img src="'+ _thumbnail_src +'" alt="'+ _contents_alt +'">' +
+                                  '</picture>' +
+                                  _caption_src +
+                                '</div>' +
+                              '</div>';
+      } else {
+        // img
+        _this_contents_html = '<div class="el-gallery-window__pic">' +
+                                '<div class="el-gallery-window__pic__inner">' +
+                                  '<picture style="--caption-height:0px;">' +
+                                    '<img src="'+ _contents_src +'" alt="'+ _contents_alt +'">' +
+                                  '</picture>' +
+                                  _caption_src +
+                                '</div>' +
+                              '</div>';
+      }
+
+      $('body').append('<div id="gallery-window" class="el-gallery-window" aria-hidden="true">' +
+        '<div class="el-gallery-window__holder">' +
+          '<div class="el-gallery-window__container">' +
+            '<div class="el-gallery-window__inner">' +
+              _this_contents_html +
+            '</div>' +
+          '<!-- /el-gallery-window__container --></div>' +
+          '<div class="el-gallery-window__prev" aria-hidden="'+ _display_next_prev +'">' +
+            '<button type="button"><i class="svg--chevron-left" aria-hidden="true"><svg><use xlink:href="#svg--chevron-left"></use></svg></i></button>' +
+          '<!-- /el-gallery-window__prev --></div>' +
+          '<div class="el-gallery-window__next" aria-hidden="'+ _display_next_prev +'">' +
+            '<button type="button"><i class="svg--chevron-right" aria-hidden="true"><svg><use xlink:href="#svg--chevron-right"></use></svg></i></button>' +
+          '<!-- /el-gallery-window__next --></div>' +
+          '<div class="el-gallery-window__close">' +
+            '<button type="button" data-gallery-close="true"><i class="svg--action-close"><svg><use xlink:href="#svg--action-close"></use></svg></i></button>' +
+          '<!-- /el-gallery-window__close --></div>' +
+        '</div>' +
+      '<!-- /el-gallery-window --></div>');
+
+      $('.el-gallery-window__pic picture').find('img').on('load', function() {
+        $('.el-gallery-window__pic picture').css('--caption-height', $('.el-gallery-window__pic').find('p').length ? $('.el-gallery-window__pic').find('p').height() + 'px' : '0px');
+        $('.el-gallery-window__pic p').css('--img-width', $('.el-gallery-window__pic picture').find('img').width() + 'px');
+        $('.el-gallery-window__pic p').css('--caption-height', $('.el-gallery-window__pic').find('p').length ? '-' + ($('.el-gallery-window__pic').find('p').height() + 10) + 'px' : '0px');
+
+        $('.el-gallery-window__holder').css({
+          top : ( window.innerHeight / 2 ) - ( $('el-gallery-window__holder').height() / 2 )
+        });
+
+        $('#gallery-window').attr('aria-hidden', false);
+
+        _current_scrollY = $( window ).scrollTop();
+
+        // 開いた座標を固定
+        $('body').attr('data-active-fixed', true);
+        $('body').css({
+          top: -_current_scrollY
+        });
+      });
+    }
+
+
+
+    //ギャラリー：表示
+    function close_gallery_window(_event) {
+
+      if (_event) {
+        _event.preventDefault();
+      }
+
+      // ポップアップ非表示
+      $('#gallery-window').attr('aria-hidden', true);
+      setTimeout( function() {
+        $('#gallery-window').remove();
+        $('[data-gallery-open="true"]').removeAttr('data-gallery-current');
+
+        //開いた座標に戻る
+        $('body').attr('data-active-fixed', false);
+        $('body').css({
+          top: 0
+        });
+        window.scrollTo( 0 , _current_scrollY );
+
+      }, 500);
+
+    }
+
+
+    return {
+      init: init
+    };
+
+
+  })(window, document, jQuery);
+
+
+
+
+//-----------------------------------------------------
+// -起動キー
+//-----------------------------------------------------
+  (function(window, document, $){
+
+    $(window).on('load', function(){
+
+      //You Tube
+      mod_youtube.init();
+
+      mod_popup_window.init();
+
+      mod_gallery_window.init();
+
+      top_youtube_channel_thumbnail.init();
+
+      if ( $('#top-main-movie').length ) {
+        var _player = new YT.Player('top-main-movie', {
+          videoId: $('#top-main-movie').attr('data-youtube-id'),
+          playerVars: {
+            'disablekb': 1,
+            'loop': 1,
+            'playlist': [$('#top-main-movie').attr('data-youtube-id')],
+            'playsinline': 1
+          },
+          events: {
+            'onReady': function (event) {
+              event.target.mute();
+              setTimeout( function() {
+                event.target.playVideo();
+              }, 300);
+            },
+          }
+        });
+      }
+
+      if ( location.hash.match(/trailer-area(\.html)?/g) ) {
+        $('#popup-window-toppage').remove();
+        $('[data-youtube-ready="trailer-area"]').click();
+      }
+
+    });
+  })(window, document, jQuery);
+
+
+
+
+

@@ -1,0 +1,4 @@
+body { margin: 0;
+    display: flex;
+    box-sizing: border-box;
+    flex: 1 0 100vw;}
